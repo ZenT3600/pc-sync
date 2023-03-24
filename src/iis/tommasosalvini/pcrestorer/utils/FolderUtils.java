@@ -12,19 +12,19 @@ public class FolderUtils {
 
 	public static ArrayList<File> flatten(File f1) throws IOException {
 		ArrayList<File> flattened = new ArrayList<File>();
-		Path[] contents;
+		Object[] contents;
 		try {
-			contents = (Path[]) Files.list(f1.toPath()).toArray();
+			contents = Files.list(f1.toPath()).toArray();
 		} catch (AccessDeniedException e) {
 			return new ArrayList<File>();
 		}
-		for (Path content : contents) {
-			if (content.toFile().isDirectory()) {
-				ArrayList<File> subContents = FolderUtils.flatten(content.toFile());
+		for (Object content : contents) {
+			if (((Path) content).toFile().isDirectory()) {
+				ArrayList<File> subContents = FolderUtils.flatten(((Path) content).toFile());
 				flattened.addAll(subContents);
-				flattened.add(content.toFile());
+				flattened.add(((Path) content).toFile());
 			} else {
-				if (!(content.toFile().getName().equals("desktop.ini"))) flattened.add(content.toFile());
+				if (!(((Path) content).toFile().getName().equals("desktop.ini"))) flattened.add(((Path) content).toFile());
 			}
 		}
 		return flattened;
