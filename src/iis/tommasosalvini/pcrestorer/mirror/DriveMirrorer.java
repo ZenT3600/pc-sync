@@ -29,7 +29,7 @@ public class DriveMirrorer {
         try {
             File source = Constants.SOURCE;
             Log.info("Mirroring target: " + target.getAbsolutePath());
-            visitRecursively(target.toPath(), source.toPath(), target);
+            visitRecursively(target.toPath(), Paths.get(source.toString(), target.toString()), target);
         }
         catch (IOException exception) {
             exception.printStackTrace();
