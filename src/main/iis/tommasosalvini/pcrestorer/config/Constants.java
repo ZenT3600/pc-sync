@@ -1,4 +1,4 @@
-package iis.tommasosalvini.pcrestorer.config;
+package main.iis.tommasosalvini.pcrestorer.config;
 
 import java.io.File;
 

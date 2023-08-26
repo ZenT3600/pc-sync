@@ -1,23 +1,25 @@
-package iis.tommasosalvini.pcrestorer.mirror;
+package main.iis.tommasosalvini.pcrestorer.mirror;
 
-import iis.tommasosalvini.pcrestorer.logging.Log;
+import main.iis.tommasosalvini.pcrestorer.logging.Log;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class MirrorFileFilter implements FileFilter {
 
-    private final boolean findHiddenFiles;
-
-    public MirrorFileFilter(boolean findHiddenFiles) {
-        this.findHiddenFiles = findHiddenFiles;
-    }
+    public MirrorFileFilter() {}
 
     public boolean accept(File pathname) {
         if (pathname.isDirectory()) {
             String filename = pathname.getName();
+
+            if (filename.equals("config.pc-sync.txt")) {
+                Log.debug("Ignoring own config...");
+                return false;
+            }
 
             if (filename.equals("$RECYCLE.BIN")) {
                 Log.debug("Ignoring recycle bin...");
@@ -37,7 +39,7 @@ public class MirrorFileFilter implements FileFilter {
             }
         }
 
-        return findHiddenFiles || (!pathname.isHidden());
+        return true;
     }
 
 }
